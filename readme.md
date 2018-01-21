@@ -1,5 +1,5 @@
 # Crop to the Future
-Predicting crop growth with NASA climate projections ([NEX-GDDP](https://cds.nccs.nasa.gov/nex/)). 
+Predicting crop growth with NASA climate projections ([NEX-GDDP](https://cds.nccs.nasa.gov/nex/)).
 
 ## Growing Degree-Day
 
@@ -9,29 +9,45 @@ I extend the GDD equation to incorporate a *top temperature*, above which plants
 ![gdd2](https://latex.codecogs.com/gif.latex?GDD%20%3D%20%5Cbegin%7Bcases%7D%20%28T_%7Bmax%7D&plus;T_%7Bmin%7D/2%29-T_%7Bbase%7D%20%26%20%5Ctext%7Bif%20%7D%20%5C%28T_%7Bmax%7D&plus;T_%7Bmin%7D/2%29%3ET_%7Bbase%7D%20%5Ctext%7B%20%5C%26%20%7D%20%5C%28T_%7Bmax%7D&plus;T_%7Bmin%7D/2%29%3CT_%7Btop%7D%20%5C%5C%200%20%26%20%5Ctext%7Botherwise%7D%20%5Cend%7Bcases%7D)  
 The base temperature and top temperature values are known for many different plant species. 
 
-An Accumulated GDD (AGDD) is the sum of consecutive non-zero GDDs, which represents the heat a plant would experience in a growing season. Studies have matched AGDD values to the stage of development for many plants. In wheat (Hard Red), for instance, leaf tips start emerging from the ground at about 145 AGDD and the plant fully matures at about 1665 GDD ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf).
+An Accumulated GDD (AGDD) is the sum of consecutive non-zero GDDs, which represents the heat a plant would experience in a growing season. Studies have matched AGDD values to the stage of development for many plants. In wheat (Hard Red), for instance, leaf tips start emerging from the ground at about 145 AGDD and the plant fully matures at about 1665 AGDD ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf).
 
-AGDDs are forecasted with NASA's NEX-GDDP dataset and predictions are made of where a user-supplied plant could grow. The NEX-GDDP dataset contains 42 models (21 climate models under 2 greenhouse gas scenarions) that each project daily minumum and maximum temperatures for small grids of about 25km x 25km across the globe up until the year 2099. The complete NEX-GDDP dataset (also including precipication forecasts) is about 12TB in size. 
+AGDDs are forecasted with NASA's NEX-GDDP dataset and predictions are made of where a user-supplied plant could grow. The NEX-GDDP dataset contains 42 models (21 climate models under 2 greenhouse gas scenarions) that each project daily minumum and maximum temperatures for small grids of about 25km x 25km across the globe up until the year 2099. For a given plant in a given year, I go through each NEX-GDDP model, calculate AGDD in each grid for every day, and check if the AGDD is above a threshold. If above the threshold, I consider it possible for the plant to grow from that day onwards. The probability of growth is the number of models where growth is possible out of all the models.
 
 ### Wheat (Hard Red) Example
 
 Hard Red is a popular variety of wheat grown around the world. The wheat grows when temperatures are above 0&deg;C ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)) and below 34&deg;C ([source](http://iopscience.iop.org/article/10.1088/1748-9326/8/3/034016)). Within the temperature range, an AGDD of 1665 is required for the wheat to develop to maturity ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)).
 
-[![2030](examples/wheat/wheat_red_hard_2030.png "Click to See")](examples/wheat/wheat_red_hard_2030.gif)
+[![Wheat 2030](examples/wheat/wheat_red_hard_2030.png "Click to See")](examples/wheat/wheat_red_hard_2030.gif)
+[![Wheat 2050](examples/wheat/wheat_red_hard_2050.png "Click to See")](examples/wheat/wheat_red_hard_2050.gif)
 
-## Plant-Specific Measures 
+### Corn Example
 
-### Corn Heat Units
+TODO
 
+- AGDD = 1400
+- Temp Base = 10
+- Temp top = 35
+
+### Upland Rice Example
+
+TODO
+- AGDD = 2100
+- Temp Base = 8.2
+- Temp top = 43
+
+## Location-Based
+
+TODO
+Zoom in to specifc Lat/Lon and estimate AGDDs and growth over years.
 
 ## Notes
 
 - There are other important factors in plant growth, like soil quality and water levels, but temperature is the most outside human control. 
-- I don't include precipitation, so the assumption is that the crops will have proper irrigation. May want to check for like monsoons and crazy rain
+- I don't include precipitation, so the assumption is that the crops will have proper irrigation. Future plans will look for like monsoons and crazy rain
 
 ## Setting up Ubuntu AWS Instance
 
-The NEX datasets are in an S3 bucket on AWS in the US West (Oregon) Region and processing (specifically transferring data) is therefor fastest on Oregon instances.
+The NEX datasets are in an S3 bucket on AWS in the US West (Oregon) Region and processing (specifically transferring data) is therefore fastest on Oregon instances.
 
 ### Mounting NEX-GDDP 
 The NEX-GDDP data is available on AWS. To mount the data on an instance, run:
