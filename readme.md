@@ -17,7 +17,7 @@ AGDDs are forecasted with NASA's NEX-GDDP dataset and predictions are made of wh
 
 Hard Red is a popular variety of wheat grown around the world. The wheat grows when temperatures are above 0&deg;C ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)) and below 34&deg;C ([source](http://iopscience.iop.org/article/10.1088/1748-9326/8/3/034016)). Within the temperature range, an AGDD of 1665 is required for the wheat to develop to maturity ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)).
 
-[![2030](examples/wheat/wheat_red_hard_2030.png "Click to Play Video")](examples/wheat/wheat_red_hard_2030.mp4)
+[![2030](examples/wheat/wheat_red_hard_2030.png "Click to See")](examples/wheat/wheat_red_hard_2030.gif)
 
 ## Plant-Specific Measures 
 
@@ -55,7 +55,6 @@ sudo s3fs -o allow_other,default_acl='public_read',public_bucket=1,uid=1000,gid=
 ```
 
 ### Julia
-
 - run ```sudo apt-get install hdf5-tools```
 - download and install [Julia](https://julialang.org/)
 - add packages: JLD, NetCDF
