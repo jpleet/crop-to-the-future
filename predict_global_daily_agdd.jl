@@ -22,7 +22,8 @@ function main()
 	const save_dir = "data/"
 	mkpath(save_dir)
 
-	#grow_count = zeros(1440, 720, 365)
+	println("Processing models. . .")
+	
 	grow_count = [zeros(365) for i in 1:1440, t in 1:720];
 	counter = 1
 
@@ -34,23 +35,23 @@ function main()
 
 			println(cmip)
 
-			try 
-				grow_count += process_model(cmip, rcp, year, ttop, tbase, agdd, data_dir)
-				counter += 1
-			
-			catch ex
-				println(ex)
-
-			end 
+			grow_count += process_model(cmip, rcp, year, ttop, tbase, agdd, data_dir)
 
 		end
 
 	end
 
+	println("Formatting results. . .")
+
+	grow_mat = zeros(1440,720, 365);
+	for i in 1:1440, j in 1:720
+		grow_mat[i,j,:] = grow_count[i,j]
+	end
+	grow_mat = grow_mat / (size(rcps,1)*size(cmips,1))
+
 	println("Saving results. . .")
 
-	save(string(save_dir, "daily_grow_prob_", year, ".jld"), 
-    	"grow_prob", grow_count / counter) # replace with HDF5
+	save(string(save_dir, "daily_grow_prob_", year, ".jld"), "grow_prob", grow_mat)
 
 end
 

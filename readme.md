@@ -37,8 +37,7 @@ TODO
 
 ## Location-Based
 
-TODO
-Zoom in to specifc Lat/Lon and estimate AGDDs and growth over years.
+Instead of looking at the whole globe, I switch and focus on the long-term dynamics within a grid. 
 
 ## Notes
 
