@@ -1,76 +1,78 @@
 using JLD;
 using NetCDF;
 
+
 function main()
 
-	rcps = ["rcp45", "rcp85"]
-	#rcps = ["rcp45"]
+    rcps = ["rcp45", "rcp85"]
+    #rcps = ["rcp45"]
 
-	cmips = ["ACCESS1-0", "CSIRO-Mk3-6-0", "MIROC-ESM", "bcc-csm1-1", 
-		"GFDL-CM3", "MIROC-ESM-CHEM", "BNU-ESM", "GFDL-ESM2G", "MIROC5", "CanESM2", 
-		"GFDL-ESM2M", "MPI-ESM-LR", "CCSM4", "inmcm4", "MPI-ESM-MR", "CESM1-BGC", 
-		"IPSL-CM5A-LR", "MRI-CGCM3", "CNRM-CM5", "IPSL-CM5A-MR", "NorESM1-M"];
-	#cmips = ["ACCESS1-0"]
+    cmips = ["ACCESS1-0", "CSIRO-Mk3-6-0", "MIROC-ESM", "bcc-csm1-1", 
+        "GFDL-CM3", "MIROC-ESM-CHEM", "BNU-ESM", "GFDL-ESM2G", "MIROC5", "CanESM2", 
+        "GFDL-ESM2M", "MPI-ESM-LR", "CCSM4", "inmcm4", "MPI-ESM-MR", "CESM1-BGC", 
+        "IPSL-CM5A-LR", "MRI-CGCM3", "CNRM-CM5", "IPSL-CM5A-MR", "NorESM1-M"];
+    #cmips = ["ACCESS1-0"]
 
-	size(ARGS)[1]==7 ? nothing : throw(AssertionError("Wrong parameters"))
-	const lon = parse(Float64, ARGS[1])
-	const lat = parse(Float64, ARGS[2])
-	const tbase = parse(Float64, ARGS[3]) + 273.15
-	const ttop = parse(Float64, ARGS[4]) + 273.15
-	const agdd = parse(Float64, ARGS[5]) + 273.15
-	const year1 = parse(Int64, ARGS[6])
-	const year2 = parse(Int64, ARGS[7])
-	
-	const data_dir = "/home/ubuntu/nex-gddp/"
-	const save_dir = "data/"
-	mkpath(save_dir)
+    #size(ARGS)[1]==7 ? nothing : throw(AssertionError("Wrong parameters"))
+    const lon = parse(Float64, ARGS[1])
+    const lat = parse(Float64, ARGS[2])
+    const tbase = parse(Float64, ARGS[3]) + 273.15
+    const ttop = parse(Float64, ARGS[4]) + 273.15
+    const agdd = parse(Float64, ARGS[5])
+    const year1 = parse(Int64, ARGS[6])
+    const year2 = parse(Int64, ARGS[7])
+    
+    const data_dir = "/home/ubuntu/nex-gddp/"
+    const save_dir = "data/"
+    mkpath(save_dir)
+    mkpath("data/temp")
 
-	# coordinates matchin all NetCDF files
-	lons = collect(linspace(0.125,359.875,1440))
-	lats = collect(linspace(-89.875, 89.875, 720))
-	lon_idx = findmin(abs.(lons-lon))[2]
-	lat_idx = findmin(abs.(lats-lat))[2]
+    # coordinates matching all NetCDF files
+    lons = collect(linspace(0.125,359.875,1440))
+    lats = collect(linspace(-89.875, 89.875, 720))
+    lon_idx = findmin(abs.(lons-lon))[2]
+    lat_idx = findmin(abs.(lats-lat))[2]
 
-	grow_count = Array{Int64,1}(0)
-	
-	for rcp in rcps
+    grow_count = Array{Int64,1}(0)
+    
+    for rcp in rcps
 
-		println(rcp)
+        println(rcp)
 
-		for cmip in cmips
+        for cmip in cmips
 
-			println(cmip)
+            println(cmip)
 
-			pred_prob = process_model(cmip, rcp, year1, year2, lon_idx, lat_idx, tbase, ttop, agdd, data_dir)
-			
-			println(size(pred_prob))
-			println(size(grow_count))
+            pred_prob = process_model(cmip, rcp, year1, year2, lon_idx, lat_idx, tbase, ttop, agdd, data_dir)
 
-			if size(grow_count) != size(pred_prob)
-				grow_count = pred_prob
-			else
-				grow_count += pred_prob
-			end
+            save(string("data/temp/model_", rcp, "_", cmip, "_", lon, "_", lat, ".jld"), "grow_prob", pred_prob)
+
+            if size(grow_count) != size(pred_prob)
+                grow_count = pred_prob
+            else
+                grow_count += pred_prob
+            end
 
 
-		end
+        end
 
-	end
+    end
+    
+    println("Saving results. . .")
 
-	println("Saving results. . .")
-
-	save(string(save_dir, "daily_grow_prob_", year1, '_', year2, '_', lon, '_', lat ".jld"), 
-    	"grow_prob", grow_count / (size(rcps,1)*size(cmips,1)))
+    save(string(save_dir, "daily_grow_prob_", year1, "_", year2, "_", lon, "_", lat, ".jld"), 
+        "grow_prob", grow_count / (size(rcps,1)*size(cmips,1)))
 
 end
 
+
 function process_model(cmip::String, rcp::String, year1::Int64, year2::Int64, lon_idx::Int64, lat_idx::Int64, tbase::Float64, ttop::Float64, agdd::Float64, data_dir::String)
 
-	gdds = [calc_gdd(cmip, rcp, y, lon_idx, lat_idx, tbase, ttop, data_dir) for y in year1:year2]
-	gdds = vcat(gdds...)
-	
-	grow_range = gdds.>0
-	[sum(cumprod(i:(i+364)) .* gdds[i:(i+364)], 1)[1] > agdd for i in 1:(size(gdds, 1)-365)]
+    gdds = [calc_gdd(cmip, rcp, y, lon_idx, lat_idx, tbase, ttop, data_dir) for y in year1:year2]
+    gdds = vcat(gdds...)
+    
+    grow_range = gdds.>0
+    [sum(cumprod(grow_range[i:(i+364)]) .* gdds[i:(i+364)], 1)[1] > agdd for i in 1:(size(gdds,1)-365)]
 
 end
 
@@ -100,11 +102,5 @@ function calc_gdd(cmip::String, rcp::String, year::Int64, lon_idx::Int64, lat_id
 
 end
 
-#gdd = calc_gdd("ACCESS1-0", "rcp45", 2030, 400, 300, 0.0+273.15, 34.0+273.15, "/home/ubuntu/nex-gddp/")
-#println(gdd)
-
-#gdds = process_model("ACCESS1-0", "rcp45", 2030, 2033, 400, 300, 0.0+273.15, 34.0+273.15, 1665.0, "/home/ubuntu/nex-gddp/")
-#println(gdds)
-#println(size(gdds))
 
 main()

@@ -15,7 +15,7 @@ function main()
 	size(ARGS)[1]==4 ? nothing : throw(AssertionError("Need 4 parameters: tbase, ttop, req_agdd, year"))
 	const tbase = parse(Float64, ARGS[1]) + 273.15
 	const ttop = parse(Float64, ARGS[2]) + 273.15
-	const agdd = parse(Float64, ARGS[3]) + 273.15
+	const agdd = parse(Float64, ARGS[3])
 	const year = parse(Int64, ARGS[4])
 
 	const data_dir = "/home/ubuntu/nex-gddp/"

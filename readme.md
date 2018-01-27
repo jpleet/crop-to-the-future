@@ -17,6 +17,7 @@ AGDDs are forecasted with NASA's NEX-GDDP dataset and predictions are made of wh
 
 Hard Red is a popular variety of wheat grown around the world. The wheat grows when temperatures are above 0&deg;C ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)) and below 34&deg;C ([source](http://iopscience.iop.org/article/10.1088/1748-9326/8/3/034016)). Within the temperature range, an AGDD of 1665 is required for the wheat to develop to maturity ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)).
 
+NEED TO FIX
 [![Wheat 2030](examples/wheat/wheat_red_hard_2030.png "Click to See")](examples/wheat/wheat_red_hard_2030.gif)
 [![Wheat 2050](examples/wheat/wheat_red_hard_2050.png "Click to See")](examples/wheat/wheat_red_hard_2050.gif)
 
@@ -37,12 +38,20 @@ TODO
 
 ## Location-Based
 
-Instead of looking at the whole globe, I switch and focus on the long-term dynamics within a grid. 
+Instead of looking at the whole globe in one year, I switch and focus on the long-term dynamics within a grid. 
+
+### Wheat in Grassland National Park, Saskatchewan
+
+Hypothetically, if I wanted to grow Hard Red wheat in Grassland National Park (longitude=252.35&deg;E, latitude=49.125&deg;N), here is when it would be best to start growing:
+
+- lat (&deg;N) = 50.40005
+- lon (&deg;E) = 254.4655
+
 
 ## Notes
 
 - There are other important factors in plant growth, like soil quality and water levels, but temperature is the most outside human control. 
-- I don't include precipitation, so the assumption is that the crops will have proper irrigation. Future plans will look for like monsoons and crazy rain
+- I don't include precipitation, so the assumption is that the crops will have proper irrigation. Future plans could look for like monsoons and crazy rain
 
 ## Setting up Ubuntu AWS Instance
 
