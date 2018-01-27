@@ -11,17 +11,15 @@ The base temperature and top temperature values are known for many different pla
 
 An Accumulated GDD (AGDD) is the sum of consecutive non-zero GDDs, which represents the heat a plant would experience in a growing season. Studies have matched AGDD values to the stage of development for many plants. In wheat (Hard Red), for instance, leaf tips start emerging from the ground at about 145 AGDD and the plant fully matures at about 1665 AGDD ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf).
 
-AGDDs are forecasted with NASA's NEX-GDDP dataset and predictions are made of where a user-supplied plant could grow. The NEX-GDDP dataset contains 42 models (21 climate models under 2 greenhouse gas scenarions) that each project daily minumum and maximum temperatures for small grids of about 25km x 25km across the globe up until the year 2099. For a given plant in a given year, I go through each NEX-GDDP model, calculate AGDD in each grid for every day, and check if the AGDD is above a threshold. If above the threshold, I consider it possible for the plant to grow from that day onwards. The probability of growth is the number of models where growth is possible out of all the models.
+AGDDs are forecasted with NASA's NEX-GDDP dataset and predictions are made of where a user-supplied plant could grow. The NEX-GDDP dataset contains 42 models (21 climate models under 2 greenhouse gas scenarions) that each project daily minumum and maximum temperatures for small grids of about 25km x 25km across the globe up until the year 2099 (about 12TB of data). For a given plant in a given year, I go through each NEX-GDDP model, calculate AGDD in each grid for every day, and check if the AGDD is above a threshold. If above the threshold, I consider it possible for the plant to grow from that day onwards. The probability of growth is the number of models where growth is possible out of all the models.
 
-### Wheat (Hard Red) Example
+### Example: Wheat (Hard Red) 
 
 Hard Red is a popular variety of wheat grown around the world. The wheat grows when temperatures are above 0&deg;C ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)) and below 34&deg;C ([source](http://iopscience.iop.org/article/10.1088/1748-9326/8/3/034016)). Within the temperature range, an AGDD of 1665 is required for the wheat to develop to maturity ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)).
 
-NEED TO FIX
-[![Wheat 2030](examples/wheat/wheat_red_hard_2030.png "Click to See")](examples/wheat/wheat_red_hard_2030.gif)
-[![Wheat 2050](examples/wheat/wheat_red_hard_2050.png "Click to See")](examples/wheat/wheat_red_hard_2050.gif)
+[![Wheat 2030](examples/wheat/wheat_hard_red_2030.png "Click to See")](examples/wheat/wheat_hard_red_2030.gif)
 
-### Corn Example
+### Example: Corn
 
 TODO
 
@@ -29,24 +27,23 @@ TODO
 - Temp Base = 10
 - Temp top = 35
 
-### Upland Rice Example
+### Example: Upland Rice Example
 
 TODO
 - AGDD = 2100
 - Temp Base = 8.2
 - Temp top = 43
 
-## Location-Based
+### Location-Based Examples
 
-Instead of looking at the whole globe in one year, I switch and focus on the long-term dynamics within a grid. 
+It can be more beneficial to zoom in on specific grids and predict the long-term dynamics in the probability of growing a given crop. 
 
-### Wheat in Grassland National Park, Saskatchewan
+#### Example: Wheat in Grassland National Park, Saskatchewan
 
-Hypothetically, if I wanted to grow Hard Red wheat in Grassland National Park (longitude=252.35&deg;E, latitude=49.125&deg;N), here is when it would be best to start growing:
+Hypothetically, if I wanted to grow Hard Red wheat in Grassland National Park (longitude=252.35&deg;E, latitude=49.125&deg;N), I'd be best to start planting according to:
 
-- lat (&deg;N) = 50.40005
-- lon (&deg;E) = 254.4655
-
+FIX
+![Grasslands National Park](examples/wheat/grassland_national_park.png)
 
 ## Notes
 
@@ -55,7 +52,7 @@ Hypothetically, if I wanted to grow Hard Red wheat in Grassland National Park (l
 
 ## Setting up Ubuntu AWS Instance
 
-The NEX datasets are in an S3 bucket on AWS in the US West (Oregon) Region and processing (specifically transferring data) is therefore fastest on Oregon instances.
+The NEX datasets are in an AWS S3 bucket in the US West (Oregon) Region and processing (specifically transferring data) is fastest on Oregon instances.
 
 ### Mounting NEX-GDDP 
 The NEX-GDDP data is available on AWS. To mount the data on an instance, run:
