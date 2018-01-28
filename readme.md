@@ -17,15 +17,13 @@ AGDDs are forecasted with NASA's NEX-GDDP dataset and predictions are made of wh
 
 Hard Red is a popular variety of wheat grown around the world. The wheat grows when temperatures are above 0&deg;C ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)) and below 34&deg;C ([source](http://iopscience.iop.org/article/10.1088/1748-9326/8/3/034016)). Within the temperature range, an AGDD of 1665 is required for the wheat to develop to maturity ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)).
 
-[![Wheat 2030](examples/wheat/wheat_hard_red_2030.png "Click to See")](examples/wheat/wheat_hard_red_2030.gif)
+[![Wheat 2030](examples/wheat_hard_red_2030.png "Click to See")](examples/wheat_hard_red_2030.gif)
 
 ### Example: Corn
 
-TODO
+Corn has a base temperature of 10&deg;C, a maximum critical temperature of about 35&deg;C, and requires an AGDD of 1400 to reach maturity ([source](https://ndawn.ndsu.nodak.edu/help-corn-growing-degree-days.html), [source](https://en.wikipedia.org/wiki/Growing_degree-day#Plant_development), [source](https://www.sciencedirect.com/science/article/pii/S2212094715300116))
 
-- AGDD = 1400
-- Temp Base = 10
-- Temp top = 35
+[![Corn 2030](examples/corn_2030.png "Click to See")](examples/corn_2030.gif)
 
 ### Example: Upland Rice Example
 
@@ -34,16 +32,9 @@ TODO
 - Temp Base = 8.2
 - Temp top = 43
 
-### Location-Based Examples
+### Location Based Examples
 
-It can be more beneficial to zoom in on specific grids and predict the long-term dynamics in the probability of growing a given crop. 
-
-#### Example: Wheat in Grassland National Park, Saskatchewan
-
-Hypothetically, if I wanted to grow Hard Red wheat in Grassland National Park (longitude=252.35&deg;E, latitude=49.125&deg;N), I'd be best to start planting according to:
-
-FIX
-![Grasslands National Park](examples/wheat/grassland_national_park.png)
+Code is also provided to zoom in on a specific grid and predict the long-term dynamics in the probability of growing a given crop.
 
 ## Notes
 
