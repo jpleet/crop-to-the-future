@@ -5,11 +5,11 @@ Predicting crop growth with NASA climate projections ([NEX-GDDP](https://cds.ncc
 
 Plant growth, from seed to maturity, can be forecasted by the amount of heat accumulated within sufficient temperature ranges. One popular measure of heat accumulation is called Growing Degree-Day ([GDD](https://en.wikipedia.org/wiki/Growing_degree-day)). The premise of a GDD is to capture whether a plant would grow on that day (i.e. average temperature is above a base temperature required for growth) and how much heat the plant would experience. The equation for a daily GDD is:  
 ![gdd](https://latex.codecogs.com/gif.latex?GDD%20%3D%20%5Cbegin%7Bcases%7D%20%28T_%7Bmax%7D&plus;T_%7Bmin%7D%29/2%20-%20T_%7Bbase%7D%20%26%20%5Ctext%7Bif%20%7D%20%5C%28T_%7Bmax%7D&plus;T_%7Bmin%7D%29/2%20%3E%20T_%7Bbase%7D%20%5C%5C%200%20%26%20%5Ctext%7Botherwise%7D%20%5Cend%7Bcases%7D)  
-I extend the GDD equation to incorporate a *top temperature*, above which plants cannot survive, to handle possible projections of extremely hot temperatures. 
+I extend the GDD equation to incorporate a critical *top temperature*, above which plants cannot survive, to handle possible projections of extremely hot temperatures. 
 ![gdd2](https://latex.codecogs.com/gif.latex?GDD%20%3D%20%5Cbegin%7Bcases%7D%20%28T_%7Bmax%7D&plus;T_%7Bmin%7D/2%29-T_%7Bbase%7D%20%26%20%5Ctext%7Bif%20%7D%20%5C%28T_%7Bmax%7D&plus;T_%7Bmin%7D/2%29%3ET_%7Bbase%7D%20%5Ctext%7B%20%5C%26%20%7D%20%5C%28T_%7Bmax%7D&plus;T_%7Bmin%7D/2%29%3CT_%7Btop%7D%20%5C%5C%200%20%26%20%5Ctext%7Botherwise%7D%20%5Cend%7Bcases%7D)  
 The base temperature and top temperature values are known for many different plant species. 
 
-An Accumulated GDD (AGDD) is the sum of consecutive non-zero GDDs, which represents the heat a plant would experience in a growing season. Studies have matched AGDD values to the stage of development for many plants. In wheat (Hard Red), for instance, leaf tips start emerging from the ground at about 145 AGDD and the plant fully matures at about 1665 AGDD ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf).
+An Accumulated GDD (AGDD) is the sum of consecutive non-zero GDDs, which represents the heat a plant would experience in a growing season. Studies have matched AGDD values to the stage of development for many plants. In wheat (Hard Red), for instance, leaf tips start emerging from the ground at about 145 AGDD and the plant fully matures at about 1665 AGDD ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)).
 
 AGDDs are forecasted with NASA's NEX-GDDP dataset and predictions are made of where a user-supplied plant could grow. The NEX-GDDP dataset contains 42 models (21 climate models under 2 greenhouse gas scenarions) that each project daily minumum and maximum temperatures for small grids of about 25km x 25km across the globe up until the year 2099 (about 12TB of data). For a given plant in a given year, I go through each NEX-GDDP model, calculate AGDD in each grid for every day, and check if the AGDD is above a threshold. If above the threshold, I consider it possible for the plant to grow from that day onwards. The probability of growth is the number of models where growth is possible out of all the models.
 
@@ -25,16 +25,15 @@ Corn has a base temperature of 10&deg;C, a maximum critical temperature of about
 
 [![Corn 2030](examples/corn_2030.png "Click to See")](examples/corn_2030.gif)
 
-### Example: Upland Rice Example
+### Example: Upland Rice
 
-TODO
-- AGDD = 2100
-- Temp Base = 8.2
-- Temp top = 43
+Upland rice doesn't need to grow in paddy fields; it has a base temperature of 8.2&deg;C, maximum critical temperature of about 43&deg;C, and requires an AGDD of 2100 to reach maturity ([source](https://www.sciencedirect.com/science/article/pii/S0378377417303906), [source](https://books.google.ca/books?id=wS-teh0I5d0C&lpg=PP2&ots=VCWFn0Zk5N&dq=yoshida%201978%20upland%20rice&lr&pg=PP1#v=onepage&q&f=false)). 
+
+[![Rice 2030](examples/rice_2030.png "Click to See")](examples/rice_2030.gif)
 
 ### Location Based Examples
 
-Code is also provided to zoom in on a specific grid and predict the long-term dynamics in the probability of growing a given crop.
+There's also code to zoom in on specific places and predict the probability of growing a given crop over multiple years. The longitude of the place needs to be in Degrees East, in values from 0-360. The latitude of the place needs to be in Degrees North, in values between -90 and 90. The code focuses on the grid in which the place is located. 
 
 ## Notes
 
