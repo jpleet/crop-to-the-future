@@ -1,49 +1,53 @@
 # Crop to the Future
-Predicting crop growth with climate projections.
+Predicting crop growth with climate projections. Knowing where and when food can be grown is critical to everything. 
 
-## Background
+## Plant Biology
 
-Plant growth, from seed to maturity, can be forecasted by the amount of heat accumulated within sufficient temperature ranges. One popular measure of heat accumulation is called Growing Degree-Day ([GDD](https://en.wikipedia.org/wiki/Growing_degree-day)). The premise of a GDD is to capture whether a plant would grow on that day (i.e. average temperature is above a base temperature required for growth) and how much heat the plant would experience. The equation for a daily GDD is:  
-![gdd](https://latex.codecogs.com/gif.latex?GDD%20%3D%20%5Cbegin%7Bcases%7D%20%28T_%7Bmax%7D&plus;T_%7Bmin%7D%29/2%20-%20T_%7Bbase%7D%20%26%20%5Ctext%7Bif%20%7D%20%5C%28T_%7Bmax%7D&plus;T_%7Bmin%7D%29/2%20%3E%20T_%7Bbase%7D%20%5C%5C%200%20%26%20%5Ctext%7Botherwise%7D%20%5Cend%7Bcases%7D)  
-I extend the GDD equation to incorporate a critical *top temperature*, above which plants cannot survive, to handle possible projections of extremely hot temperatures. 
-![gdd2](https://latex.codecogs.com/gif.latex?GDD%20%3D%20%5Cbegin%7Bcases%7D%20%28T_%7Bmax%7D&plus;T_%7Bmin%7D/2%29-T_%7Bbase%7D%20%26%20%5Ctext%7Bif%20%7D%20%5C%28T_%7Bmax%7D&plus;T_%7Bmin%7D/2%29%3ET_%7Bbase%7D%20%5Ctext%7B%20%5C%26%20%7D%20%5C%28T_%7Bmax%7D&plus;T_%7Bmin%7D/2%29%3CT_%7Btop%7D%20%5C%5C%200%20%26%20%5Ctext%7Botherwise%7D%20%5Cend%7Bcases%7D)  
-The base temperature and top temperature values are known for many different plant species. 
+Plant growth, from seed to maturity, can be predicted by adding Growing Degree-Day ([GDD](https://en.wikipedia.org/wiki/Growing_degree-day)) values. GDD measures how much heat a plant would experience in a day of a growing season, simply calculated by: ![gdd](https://latex.codecogs.com/gif.latex?GDD%20%3D%20max%28%28Tmax+Tmin%29/2%20-%20Tbase%2C%200%29)  
+Where *Tmin* is the minimum daily temperature, *Tmax* is the maximum daily temperature, and *Tbase* is a base temperature above which the plant grows.
+The GDD equation is extended to incorporate a critical *top temperature*, above which plants cannot survive, to handle possible projections of extremely hot temperatures. ![gdd2](https://latex.codecogs.com/gif.latex?GDD%20%3D%20max%28%28Tmax+Tmin%29/2%20-%20Tbase%2C%200%29%20%5Ctimes%20%28Tmax%20%3C%20Ttop%29)  
+The base temperature and top temperature values are known for many different plant species. Accumulated GDD (AGDD) is the sum of consecutive non-zero GDDs and represents the amount of heat a plant would experience in a growing season. Studies have matched AGDD values to the stage of development for many plants. In wheat (Hard Red), for instance, leaf tips start emerging from the ground at about 145 AGDD and the plant fully matures at about 1665 AGDD ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)). **Crop to the Future** uses NASA's climate projections to calculate AGDDs and predict where user-supplied plants could grow.
 
-Accumulated GDD (AGDD) is the sum of consecutive non-zero GDDs and represents the amount of heat in a growing season. Studies have matched AGDD values to the stage of development for many plants. In wheat (Hard Red), for instance, leaf tips start emerging from the ground at about 145 AGDD and the plant fully matures at about 1665 AGDD ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)).
+## Global Climate Projections ([NEX-GDDP](https://cds.nccs.nasa.gov/nex/))
 
-**Crop to the Future** uses climate projections to calculate AGDDs and predict where user-supplied plants could grow.
-
-
-## Global: NEX-GDDP ([NEX-GDDP](https://cds.nccs.nasa.gov/nex/))
-
-The NEX-GDDP dataset contains 42 models (21 climate models under 2 greenhouse gas scenarions) that each project daily minumum and maximum temperatures for small grids of about 25km x 25km across the globe up until the year 2099 (about 12TB of data). For a given plant in a given year, I go through each NEX-GDDP model, calculate AGDD in each grid for every day, and check if the AGDD is above a threshold. If above the threshold, I consider it possible for the plant to grow from that day onwards. The probability of growth is the number of models where growth is possible out of all the models.
-
-### Example: Wheat (Hard Red) 2030 
-
-Hard Red is a popular variety of wheat grown around the world. The wheat grows when temperatures are above 0&deg;C ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)) and below 34&deg;C ([source](http://iopscience.iop.org/article/10.1088/1748-9326/8/3/034016)). Within the temperature range, an AGDD of 1665 is required for the wheat to develop to maturity ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)).
-
-[![Wheat 2030](examples/global_wheat_hard_red_2030.png "Click to See")](examples/global_wheat_hard_red_2030.gif)
-
-#### Example: Corn 2030
-
-Corn has a base temperature of 10&deg;C, a maximum critical temperature of about 35&deg;C, and requires an AGDD of 1400 to reach maturity ([source](https://ndawn.ndsu.nodak.edu/help-corn-growing-degree-days.html), [source](https://en.wikipedia.org/wiki/Growing_degree-day#Plant_development), [source](https://www.sciencedirect.com/science/article/pii/S2212094715300116))
-
-[![Corn 2030](examples/global_corn_2030.png "Click to See")](examples/global_corn_2030.gif)
-
-#### Example: Upland Rice 2030
-
-Upland rice doesn't need to grow in paddy fields; it has a base temperature of 8.2&deg;C, maximum critical temperature of about 43&deg;C, and requires an AGDD of 2100 to reach maturity ([source](https://www.sciencedirect.com/science/article/pii/S0378377417303906), [source](https://books.google.ca/books?id=wS-teh0I5d0C&lpg=PP2&ots=VCWFn0Zk5N&dq=yoshida%201978%20upland%20rice&lr&pg=PP1#v=onepage&q&f=false)). 
-
-[![Rice 2030](examples/global_rice_2030.png "Click to See")](examples/global_rice_2030.gif)
-
-### Location Based Examples
-
-There's also code to zoom in on specific places and predict the probability of growing a given crop over multiple years. The longitude of the place needs to be in Degrees East, in values from 0-360. The latitude of the place needs to be in Degrees North, in values between -90 and 90. The code focuses on the grid in which the place is located. 
+The NEX-GDDP dataset contains 42 models (21 climate models under 2 greenhouse gas scenarios) that each forecast daily minumum and maximum temperatures for small grids of about 25km x 25km across the globe up until the year 2099 (about 12TB of data). For a given plant in a given year, I go through each NEX-GDDP model, calculate AGDD in each grid for every day, and check if the AGDD is above a maturity threshold. If above the maturity threshold, I consider that the crop can be planted in that grid, on that day and reach maturity --- for the given model. The probability of growth is the number of models where growth is possible out of all the models.
 
 ## Notes
 
 - There are other important factors in plant growth, like soil quality and water levels, but temperature is the most outside human control. 
-- I don't include precipitation, so the assumption is that the crops will have proper irrigation. Future plans could look for like monsoons and crazy rain.
+- I don't include precipitation, so the assumption is that the crops will have proper irrigation. Future plans could look for like monsoons or adequate rainfall for growth.
+- Predictions are made for land and sea. Maybe one day we grow crops on barges, but until then, it would be nice to remove sea grids.
+- This is a lot of data crunching, I've only done a few examples, see below and in the examples folder.
+
+## Examples
+
+### Wheat (Hard Red)
+
+Hard Red is a popular variety of wheat grown around the world. The wheat grows when temperatures are above [0&deg;C](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf) and below [34&deg;C](http://iopscience.iop.org/article/10.1088/1748-9326/8/3/034016). Within the temperature range, an AGDD of [1665](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf) is required for the wheat to develop to maturity.
+
+#### 2090 - 2098
+
+*processing*
+
+#### 2030
+
+[![Wheat 2030](examples/global_wheat_hard_red_2030.png "Click to See")](examples/global_wheat_hard_red_2030.gif)
+
+### Corn
+
+Corn has a base temperature of [10&deg;C](https://ndawn.ndsu.nodak.edu/help-corn-growing-degree-days.html), a maximum critical temperature of about [35&deg;C](https://www.sciencedirect.com/science/article/pii/S2212094715300116), and certain strains require an AGDD of [2700](https://graincrops.ca.uky.edu/files/corngrowthstages_2011.pdf) to reach maturity.
+
+#### 2030
+
+[![Corn 2030](examples/global_corn_2030.png "Click to See")](examples/global_corn_2030.gif)
+
+### Upland Rice
+
+Upland rice doesn't need to grow in paddy fields; it has a base temperature of [8.2&deg;C](https://www.sciencedirect.com/science/article/pii/S0378377417303906), maximum critical temperature of about [35&deg;C](https://books.google.ca/books?id=wS-teh0I5d0C&lpg=PP2&ots=VCWFn0Zk5N&dq=yoshida%201978%20upland%20rice&lr&pg=PP1#v=onepage&q&f=false), and requires an AGDD of around [2100](https://www.sciencedirect.com/science/article/pii/S0378377417303906) to reach maturity. 
+
+#### 2030
+
+[![Rice 2030](examples/global_rice_2030.png "Click to See")](examples/global_rice_2030.gif)
 
 ## Setting up NEX-GDDP Ubuntu AWS Instance
 
@@ -74,3 +78,5 @@ sudo s3fs -o allow_other,default_acl='public_read',public_bucket=1,uid=1000,gid=
 - run ```sudo apt-get install hdf5-tools```
 - download and install [Julia](https://julialang.org/)
 - add packages: JLD, NetCDF
+
+[1]: http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf
