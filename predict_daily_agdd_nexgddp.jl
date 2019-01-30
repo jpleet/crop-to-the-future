@@ -15,11 +15,12 @@ function main()
 		"GFDL-ESM2M", "MPI-ESM-LR", "CCSM4", "inmcm4", "MPI-ESM-MR", "CESM1-BGC", 
 		"IPSL-CM5A-LR", "MRI-CGCM3", "CNRM-CM5", "IPSL-CM5A-MR", "NorESM1-M"];
 
-	size(ARGS)[1]==4 ? nothing : throw(AssertionError("Need 4 parameters: tbase, ttop, req_agdd, year"))
+	size(ARGS)[1]==5 ? nothing : throw(AssertionError("Need 4 parameters: tbase, ttop, req_agdd, start_year, end_year"))
 	tbase = parse(Float64, ARGS[1]) + 273.15
 	ttop = parse(Float64, ARGS[2]) + 273.15
 	agdd = parse(Float64, ARGS[3])
-	year = parse(Int64, ARGS[4])
+	start_year = parse(Int64, ARGS[4])
+	end_year = parse(Int64, ARGS[5])
 
 	data_dir = "/home/ubuntu/nex-gddp/"
 	save_dir = "data/"
@@ -27,27 +28,32 @@ function main()
 
 	# go through each model and count number of models where growth is possible
 	println("Processing models. . .")
+
+	for year in start_year : end_year
+
+		println(year)
 	
-	grow_count = [zeros(365) for i in 1:1440, t in 1:720];
-	counter = 1
+		grow_count = [zeros(365) for i in 1:1440, t in 1:720];
 
-	for rcp in rcps
+		for rcp in rcps
 
-		println(rcp)
+			println(rcp)
 
-		for cmip in cmips
+			for cmip in cmips
 
-			println(cmip)
+				println(cmip)
 
-			grow_count += process_model(cmip, rcp, year, ttop, tbase, agdd, data_dir)
+				grow_count += process_model(cmip, rcp, year, ttop, tbase, agdd, data_dir)
+
+			end
 
 		end
 
+		println("Saving results. . .")
+
+		save(string(save_dir, "daily_grow_count_", year, ".jld"), "grow_count", grow_count)
+
 	end
-
-	println("Saving results. . .")
-
-	save(string(save_dir, "daily_grow_count_", year, ".jld"), "grow_count", grow_count)
 
 end
 

@@ -27,27 +27,26 @@ Hard Red is a popular variety of wheat grown around the world. The wheat grows w
 
 #### 2090 - 2098
 
-*processing*
+![wheat_2090](examples/wheat_hard_red_2090_1.png "See examples/ for video")
 
-#### 2030
+See examples/wheat_hard_read_2090.mp4 for video. Processing the following years.
 
-[![Wheat 2030](examples/global_wheat_hard_red_2030.png "Click to See")](examples/global_wheat_hard_red_2030.gif)
 
 ### Corn
 
 Corn has a base temperature of [10&deg;C](https://ndawn.ndsu.nodak.edu/help-corn-growing-degree-days.html), a maximum critical temperature of about [35&deg;C](https://www.sciencedirect.com/science/article/pii/S2212094715300116), and certain strains require an AGDD of [2700](https://graincrops.ca.uky.edu/files/corngrowthstages_2011.pdf) to reach maturity.
 
-#### 2030
+#### 2090 - 2098
 
-[![Corn 2030](examples/global_corn_2030.png "Click to See")](examples/global_corn_2030.gif)
+*processing*
 
 ### Upland Rice
 
 Upland rice doesn't need to grow in paddy fields; it has a base temperature of [8.2&deg;C](https://www.sciencedirect.com/science/article/pii/S0378377417303906), maximum critical temperature of about [35&deg;C](https://books.google.ca/books?id=wS-teh0I5d0C&lpg=PP2&ots=VCWFn0Zk5N&dq=yoshida%201978%20upland%20rice&lr&pg=PP1#v=onepage&q&f=false), and requires an AGDD of around [2100](https://www.sciencedirect.com/science/article/pii/S0378377417303906) to reach maturity. 
 
-#### 2030
+#### 2090 - 2098
 
-[![Rice 2030](examples/global_rice_2030.png "Click to See")](examples/global_rice_2030.gif)
+*processing*
 
 ## Setting up NEX-GDDP Ubuntu AWS Instance
 
