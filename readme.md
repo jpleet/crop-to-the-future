@@ -27,10 +27,9 @@ Hard Red is a popular variety of wheat grown around the world. The wheat grows w
 
 #### 2090 - 2098
 
-[![Wheat 2090](examples/wheat_hard_red_2090_1.png "Click to See")](examples/wheat_hard_red_2090.gif)
+![Wheat 2090](examples/wheat_hard_red_2090_1.png)
 
-See examples/wheat_hard_read_2090.gif
-
+See examples/wheat/ for animations
 
 ### Corn
 
