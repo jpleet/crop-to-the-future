@@ -27,7 +27,7 @@ Hard Red is a popular variety of wheat grown around the world. The wheat grows w
 
 #### 2090 - 2098
 
-![Wheat 2090](examples/wheat_hard_red_2090_1.png)
+![Wheat 2090](examples/wheat_hard_red_2090_001.png)
 
 See [examples/wheat/](examples/wheat/) for full-year animations.
 
@@ -37,7 +37,7 @@ Corn has a base temperature of [10&deg;C](https://ndawn.ndsu.nodak.edu/help-corn
 
 #### 2090 - 2098
 
-![Corn 2090](examples/corn_2090_1.png)
+![Corn 2090](examples/corn_2090_001.png)
 
 See [examples/corn/](examples/corn/) for full-year animations. Something seems off: corn grows nearly nowhere. Maybe it's poor input values. Or maybe this corn strain struggles in the future. Other strains grow at lower AGDD and could be better suited. Will run one day. . . 
 
