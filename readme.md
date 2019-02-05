@@ -10,7 +10,7 @@ The base temperature and top temperature values are known for many different pla
 
 ## Global Climate Projections ([NEX-GDDP](https://cds.nccs.nasa.gov/nex/))
 
-The NEX-GDDP dataset contains 42 models (21 climate models under 2 greenhouse gas scenarios) that each forecast daily minumum and maximum temperatures for small grids of about 25km x 25km across the globe up until the year 2099 (about 12TB of data). For a given plant in a given year, I go through each NEX-GDDP model, calculate AGDD in each grid for every day, and check if the AGDD is above a maturity threshold. If above the maturity threshold, I consider that the crop can be planted in that grid, on that day and reach maturity --- for the given model. The probability of growth is the number of models where growth is possible out of all the models.
+The NEX-GDDP dataset contains 42 models (21 climate models under 2 greenhouse gas scenarios) that each forecast daily minumum and maximum temperatures for small grids of about 25km x 25km across the globe up until the year 2099 (about 12TB of data). For a given plant in a given year, I go through each of the 42 models, calculate AGDD in each grid for every day, and check if the AGDD is above a maturity threshold. If above the maturity threshold, I consider that the crop can be planted in that grid, on that day and reach maturity --- for the given model. The probability of growth is the number of models where growth is possible out of all the models.
 
 ## Notes
 
@@ -29,15 +29,17 @@ Hard Red is a popular variety of wheat grown around the world. The wheat grows w
 
 ![Wheat 2090](examples/wheat_hard_red_2090_1.png)
 
-See examples/wheat/ for animations
+See [examples/wheat/](examples/wheat/) for full-year animations.
 
 ### Corn
 
-Corn has a base temperature of [10&deg;C](https://ndawn.ndsu.nodak.edu/help-corn-growing-degree-days.html), a maximum critical temperature of about [35&deg;C](https://www.sciencedirect.com/science/article/pii/S2212094715300116), and certain strains require an AGDD of [2700](https://graincrops.ca.uky.edu/files/corngrowthstages_2011.pdf) to reach maturity.
+Corn has a base temperature of [10&deg;C](https://ndawn.ndsu.nodak.edu/help-corn-growing-degree-days.html), a maximum critical temperature of about [35&deg;C](https://www.sciencedirect.com/science/article/pii/S2212094715300116), and certain strains require an AGDD of [2700](https://en.wikipedia.org/wiki/Growing_degree-day) to reach maturity.
 
 #### 2090 - 2098
 
-*processing*
+![Corn 2090](examples/corn_2090_1.png)
+
+See [examples/corn/](examples/corn/) for full-year animations. Something seems off: corn grows nearly nowhere. Maybe it's poor input values. Or maybe this corn strain struggles in the future. Other strains grow at lower AGDD and could be better suited. Will run one day. . . 
 
 ### Upland Rice
 
@@ -76,5 +78,3 @@ sudo s3fs -o allow_other,default_acl='public_read',public_bucket=1,uid=1000,gid=
 - run ```sudo apt-get install hdf5-tools```
 - download and install [Julia](https://julialang.org/)
 - add packages: JLD, NetCDF
-
-[1]: http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf
