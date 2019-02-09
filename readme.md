@@ -1,14 +1,15 @@
 # Crop to the Future
-Predicting crop growth with climate projections. Knowing where and when food can be grown is critical to everything. 
+
+Predicting crop growth with NASA's [NEX](https://cds.nccs.nasa.gov/nex/) climate projections. 
 
 ## Plant Biology
 
-Plant growth, from seed to maturity, can be predicted by adding Growing Degree-Day ([GDD](https://en.wikipedia.org/wiki/Growing_degree-day)) values. GDD measures how much heat a plant would experience in a day of a growing season, simply calculated by: ![gdd](https://latex.codecogs.com/gif.latex?GDD%20%3D%20max%28%28Tmax+Tmin%29/2%20-%20Tbase%2C%200%29)  
+Plant growth, from seed to maturity, can be estimated by adding Growing Degree-Day ([GDD](https://en.wikipedia.org/wiki/Growing_degree-day)) values. GDD measures how much heat a plant would experience in a day of a growing season, simply calculated by: ![gdd](https://latex.codecogs.com/gif.latex?GDD%20%3D%20max%28%28Tmax+Tmin%29/2%20-%20Tbase%2C%200%29)  
 Where *Tmin* is the minimum daily temperature, *Tmax* is the maximum daily temperature, and *Tbase* is a base temperature above which the plant grows.
 The GDD equation is extended to incorporate a critical *top temperature*, above which plants cannot survive, to handle possible projections of extremely hot temperatures. ![gdd2](https://latex.codecogs.com/gif.latex?GDD%20%3D%20max%28%28Tmax+Tmin%29/2%20-%20Tbase%2C%200%29%20%5Ctimes%20%28Tmax%20%3C%20Ttop%29)  
-The base temperature and top temperature values are known for many different plant species. Accumulated GDD (AGDD) is the sum of consecutive non-zero GDDs and represents the amount of heat a plant would experience in a growing season. Studies have matched AGDD values to the stage of development for many plants. In wheat (Hard Red), for instance, leaf tips start emerging from the ground at about 145 AGDD and the plant fully matures at about 1665 AGDD ([source](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf)). **Crop to the Future** uses NASA's climate projections to calculate AGDDs and predict where user-supplied plants could grow.
+The base temperature and top temperature values are known for many different plant species. Accumulated GDD (AGDD) is the sum of consecutive non-zero GDDs and represents the amount of heat a plant would experience in a growing season. Studies have matched AGDD values to the stage of development for many plants. In [wheat (Hard Red)](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf), for instance, leaf tips start emerging from the ground at about 145 AGDD and the plant fully matures at about 1665 AGDD. **Crop to the Future** uses NASA's climate projections to calculate AGDDs and predict where user-supplied plants could grow.
 
-## Global Climate Projections ([NEX-GDDP](https://cds.nccs.nasa.gov/nex/))
+## Global Climate Projections (NEX-GDDP)
 
 The NEX-GDDP dataset contains 42 models (21 climate models under 2 greenhouse gas scenarios) that each forecast daily minumum and maximum temperatures for small grids of about 25km x 25km across the globe up until the year 2099 (about 12TB of data). For a given plant in a given year, I go through each of the 42 models, calculate AGDD in each grid for every day, and check if the AGDD is above a maturity threshold. If above the maturity threshold, I consider that the crop can be planted in that grid, on that day and reach maturity --- for the given model. The probability of growth is the number of models where growth is possible out of all the models.
 
@@ -33,13 +34,21 @@ See [examples/wheat/](examples/wheat/) for full-year animations.
 
 ### Corn
 
-Corn has a base temperature of [10&deg;C](https://ndawn.ndsu.nodak.edu/help-corn-growing-degree-days.html), a maximum critical temperature of about [35&deg;C](https://www.sciencedirect.com/science/article/pii/S2212094715300116), and certain strains require an AGDD of [2700](https://en.wikipedia.org/wiki/Growing_degree-day) to reach maturity.
+Corn has a base temperature of [10&deg;C](https://ndawn.ndsu.nodak.edu/help-corn-growing-degree-days.html), a maximum critical temperature of about [35&deg;C](https://www.sciencedirect.com/science/article/pii/S2212094715300116), and strains differ in AGDD to reach maturity (https://en.wikipedia.org/wiki/Growing_degree-day).
 
 #### 2090 - 2098
 
-![Corn 2090](examples/corn_2090_001.png)
+##### AGDD 2700 Strain
 
-See [examples/corn/](examples/corn/) for full-year animations. Something seems off: corn grows nearly nowhere. Maybe it's poor input values. Or maybe this corn strain struggles in the future. Other strains grow at lower AGDD and could be better suited. Will run one day. . . 
+![Corn 2090](examples/corn_2700_2090_001.png)
+
+See [examples/corn/2700](examples/corn/2700/) for full-year animations. This corn strain grows nearly nowhere. Maybe it's poor input values. Or maybe this strain will struggle in the future. Other strains grow at lower AGDD and could be better suited.
+
+##### AGDD 800 Strain
+
+![Corn 2090](examples/corn_800_2090_001.png)
+
+See [examples/corn/800](examples/corn/800/) for more animations. Still processing some years.
 
 ### Upland Rice
 
@@ -49,9 +58,9 @@ Upland rice doesn't need to grow in paddy fields; it has a base temperature of [
 
 *processing*
 
-## Setting up NEX-GDDP Ubuntu AWS Instance
+## Setting up NEX-GDDP on Ubuntu AWS Instance
 
-The NEX datasets are in an AWS S3 bucket in the US West (Oregon) Region and processing (specifically transferring data) is fastest on Oregon instances.
+The NEX datasets are in an AWS S3 bucket in the US West (Oregon) region and processing (specifically transferring data) is fastest on Oregon instances.
 
 ### Mounting NEX-GDDP 
 The NEX-GDDP data is available on AWS. To mount the data on an instance, run:

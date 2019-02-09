@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 year = int(sys.argv[1])
-f = "data/daily_grow_count_{}.jld".format(year)
+f = "data/corn_800_daily_grow_count_{}.jld".format(year)
 h5 = h5py.File(f, "r")
 gc = h5['grow_count']
 

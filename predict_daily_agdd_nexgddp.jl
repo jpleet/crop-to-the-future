@@ -18,7 +18,7 @@ function main()
         "GFDL-ESM2M", "MPI-ESM-LR", "CCSM4", "inmcm4", "MPI-ESM-MR", "CESM1-BGC", 
         "IPSL-CM5A-LR", "MRI-CGCM3", "CNRM-CM5", "IPSL-CM5A-MR", "NorESM1-M"];
 
-    size(ARGS)[1]==5 ? nothing : throw(AssertionError("Need 4 parameters: tbase, ttop, req_agdd, start_year, end_year"))
+    size(ARGS)[1]==5 ? nothing : throw(AssertionError("Need 5 parameters: tbase, ttop, req_agdd, start_year, end_year"))
     tbase = parse(Float64, ARGS[1]) + 273.15
     ttop = parse(Float64, ARGS[2]) + 273.15
     agdd_threshold = parse(Float64, ARGS[3])
