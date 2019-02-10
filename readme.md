@@ -18,7 +18,7 @@ The NEX-GDDP dataset contains 42 models (21 climate models under 2 greenhouse ga
 - There are other important factors in plant growth, like soil quality and water levels, but temperature is the most outside human control. 
 - I don't include precipitation, so the assumption is that the crops will have proper irrigation. Future plans could look for like monsoons or adequate rainfall for growth.
 - Predictions are made for land and sea. Maybe one day we grow crops on barges, but until then, it would be nice to remove sea grids.
-- This is a lot of data crunching, I've only done a few examples, see below and in the examples folder.
+- This is a lot of data crunching (and starts getting expensive), I'm slowly processing examples, see below and in the examples folder.
 
 ## Examples
 

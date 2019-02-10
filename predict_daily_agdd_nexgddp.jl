@@ -1,6 +1,8 @@
 # Forecasts user-supplied crop information
 
-# TO DO: test if faster passing last processed gdd (will take more memory)
+# TO DO / TEST: 
+# - if faster passing last processed gdd for next year (will take more memory = more expensive AWS instance)
+# - try/catch reading file, sometimes instance can't read file, probably loses connection with mount, and all fails
 
 using JLD;
 using NetCDF;
