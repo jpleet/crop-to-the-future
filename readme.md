@@ -1,17 +1,18 @@
 # Crop to the Future
 
-Predicting crop growth with NASA's [NEX](https://cds.nccs.nasa.gov/nex/) climate projections. 
+Predicting crop growth with NASA's [NEX](https://cds.nccs.nasa.gov/nex/) climate projections. Animations in example/ highlight where and when some crops will likely grow between 2090 and 2099.  
 
 ## Plant Biology
 
-Plant growth, from seed to maturity, can be estimated by adding Growing Degree-Day ([GDD](https://en.wikipedia.org/wiki/Growing_degree-day)) values. GDD measures how much heat a plant would experience in a day of a growing season, simply calculated by: ![gdd](https://latex.codecogs.com/gif.latex?GDD%20%3D%20max%28%28Tmax+Tmin%29/2%20-%20Tbase%2C%200%29)  
-Where *Tmin* is the minimum daily temperature, *Tmax* is the maximum daily temperature, and *Tbase* is a base temperature above which the plant grows.
-The GDD equation is extended to incorporate a critical *top temperature*, above which plants cannot survive, to handle possible projections of extremely hot temperatures. ![gdd2](https://latex.codecogs.com/gif.latex?GDD%20%3D%20max%28%28Tmax+Tmin%29/2%20-%20Tbase%2C%200%29%20%5Ctimes%20%28Tmax%20%3C%20Ttop%29)  
-The base temperature and top temperature values are known for many different plant species. Accumulated GDD (AGDD) is the sum of consecutive non-zero GDDs and represents the amount of heat a plant would experience in a growing season. Studies have matched AGDD values to the stage of development for many plants. In [wheat (Hard Red)](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf), for instance, leaf tips start emerging from the ground at about 145 AGDD and the plant fully matures at about 1665 AGDD. **Crop to the Future** uses NASA's climate projections to calculate AGDDs and predict where user-supplied plants could grow.
+Plant growth, from seed to maturity, can be estimated by adding Growing Degree-Day ([GDD](https://en.wikipedia.org/wiki/Growing_degree-day)) values. GDD measures how much heat a plant experiences in a day of a growing season, simply calculated by: ![gdd](https://latex.codecogs.com/gif.latex?GDD%20%3D%20max%28%28Tmax+Tmin%29/2%20-%20Tbase%2C%200%29)  
+Where *Tmin* is the minimum daily temperature, *Tmax* is the maximum daily temperature, and *Tbase* is a base temperature above which the plant grows. The GDD equation is extended to incorporate a critical *top temperature*, above which plants cannot survive, to handle possible projections of extremely hot temperatures. ![gdd2](https://latex.codecogs.com/gif.latex?GDD%20%3D%20max%28%28Tmax+Tmin%29/2%20-%20Tbase%2C%200%29%20%5Ctimes%20%28Tmax%20%3C%20Ttop%29)  
+The base temperature and top temperature values are known for many different plant species. 
+
+Accumulated GDD (AGDD) is the sum of consecutive non-zero GDDs and represents the amount of heat a plant would experience in a growing season. Studies have matched AGDD values to the stage of development for many plants. In [wheat (Hard Red)](http://msuextension.org/publications/AgandNaturalResources/MT200103AG.pdf), for instance, leaf tips start emerging from the ground at about 145 AGDD and the plant fully matures at about 1665 AGDD. **Crop to the Future** uses NASA's climate projections to calculate AGDDs and predict where plants could grow.
 
 ## Global Climate Projections (NEX-GDDP)
 
-The NEX-GDDP dataset contains 42 models (21 climate models under 2 greenhouse gas scenarios) that each forecast daily minumum and maximum temperatures for small grids of about 25km x 25km across the globe up until the year 2099 (about 12TB of data). For a given plant in a given year, I go through each of the 42 models, calculate AGDD in each grid for every day, and check if the AGDD is above a maturity threshold. If above the maturity threshold, I consider that the crop can be planted in that grid, on that day and reach maturity --- for the given model. The probability of growth is the number of models where growth is possible out of all the models.
+The NEX-GDDP dataset contains 42 models (21 climate models under 2 greenhouse gas scenarios) that each forecast daily minumum and maximum temperatures for small grids of about 25km x 25km across the globe up until the year 2099 (about 12TB of data). For a given plant in a given year, I go through each of the 42 models, calculate GDD in each grid for every day, and check if the AGDD is above a maturity threshold. If above the maturity threshold, I consider that the crop can be planted in that grid, on that day and reach maturity --- for the given model. The probability of growth is the number of models where growth is possible out of all the models.
 
 ## Notes
 
