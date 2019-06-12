@@ -1,6 +1,6 @@
 # Crop to the Future
 
-Predicting crop growth with NASA's [NEX](https://cds.nccs.nasa.gov/nex/) climate projections. Animations in example/ highlight where and when some crops will likely grow between 2090 and 2099.  
+Predicting crop growth with NASA's [NEX-GDDP](https://cds.nccs.nasa.gov/nex-gddp/) climate projections. Animations in [examples](examples/) show where and when some crops will likely grow worldwide between 2090 and 2099. This is a lot of data crunching (and starts getting expensive), I'm slowly processing examples.
 
 ## Plant Biology
 
@@ -12,14 +12,9 @@ Accumulated GDD (AGDD) is the sum of consecutive non-zero GDDs and represents th
 
 ## Global Climate Projections (NEX-GDDP)
 
-The NEX-GDDP dataset contains 42 models (21 climate models under 2 greenhouse gas scenarios) that each forecast daily minumum and maximum temperatures for small grids of about 25km x 25km across the globe up until the year 2099 (about 12TB of data). For a given plant in a given year, I go through each of the 42 models, calculate GDD in each grid for every day, and check if the AGDD is above a maturity threshold. If above the maturity threshold, I consider that the crop can be planted in that grid, on that day and reach maturity --- for the given model. The probability of growth is the number of models where growth is possible out of all the models.
+The NEX-GDDP dataset contains 21 climate models under 2 greenhouse gas scenarios. Each of the 42 models forecast daily minumum and maximum temperatures for small grids of about 25km x 25km across the globe up until the year 2099 (about 12TB of data).
 
-## Notes
-
-- There are other important factors in plant growth, like soil quality and water levels, but temperature is the most outside human control. 
-- I don't include precipitation, so the assumption is that the crops will have proper irrigation. Future plans could look for like monsoons or adequate rainfall for growth.
-- Predictions are made for land and sea. Maybe one day we grow crops on barges, but until then, it would be nice to remove sea grids.
-- This is a lot of data crunching (and starts getting expensive), I'm slowly processing examples, see below and in the examples folder.
+For a given plant and NEX model, the GDD is calculated for every day of a year in each grid cell. Then, at every day in each grid cell, the GDD is accumulated for the next 365 days, with the accumulation stopping if the GDD is zero. The given plant is assumed to be able to reach maturity on days where the AGDD is above the maturity threshold. The probability of growth in a cell is the number of NEX models where growth is possible out of all the models.
 
 ## Examples
 
@@ -58,6 +53,12 @@ Upland rice doesn't need to grow in paddy fields; it has a base temperature of [
 #### 2090 - 2098
 
 *processing*
+
+## Notes
+
+- There are other important factors in plant growth, like soil quality and water levels, but temperature is the most outside human control. 
+- I don't include precipitation, so the assumption is that the crops will have proper irrigation. Future plans could look for like monsoons or adequate rainfall for growth.
+- Predictions are made for land and sea. Maybe one day we grow crops on barges, but until then, it would be nice to remove sea grid cells.
 
 ## Setting up NEX-GDDP on Ubuntu AWS Instance
 
