@@ -26,11 +26,22 @@ Hard Red is a popular variety of wheat grown around the world. The wheat grows w
 
 ![Wheat 2090](examples/wheat_hard_red_2090_001.png)
 
-See [examples/wheat/](examples/wheat/) for full-year animations.
+
+Full animations can be found here:
+
+|   Year                                         |   Year                                   |
+|  --------                                      |  --------                                   |
+| [2090](examples/wheat/wheat_hard_red_2090.gif) | [2095](examples/wheat/wheat_hard_red_2095.gif) |
+| [2091](examples/wheat/wheat_hard_red_2091.gif) | [2096](examples/wheat/wheat_hard_red_2096.gif) |
+| [2092](examples/wheat/wheat_hard_red_2092.gif) | [2097](examples/wheat/wheat_hard_red_2097.gif) |
+| [2093](examples/wheat/wheat_hard_red_2093.gif) | [2098](examples/wheat/wheat_hard_red_2098.gif) |
+| [2094](examples/wheat/wheat_hard_red_2094.gif) |
+
+
 
 ### Corn
 
-Corn has a base temperature of [10&deg;C](https://ndawn.ndsu.nodak.edu/help-corn-growing-degree-days.html), a maximum critical temperature of about [35&deg;C](https://www.sciencedirect.com/science/article/pii/S2212094715300116), and strains differ in AGDD to reach maturity (https://en.wikipedia.org/wiki/Growing_degree-day).
+Corn has a base temperature of [10&deg;C](https://ndawn.ndsu.nodak.edu/help-corn-growing-degree-days.html), a maximum critical temperature of about [35&deg;C](https://www.sciencedirect.com/science/article/pii/S2212094715300116), and strains [differ](https://en.wikipedia.org/wiki/Growing_degree-day#Plant_development) in AGDD to reach maturity .
 
 #### 2090 - 2098
 
@@ -38,13 +49,35 @@ Corn has a base temperature of [10&deg;C](https://ndawn.ndsu.nodak.edu/help-corn
 
 ![Corn 2090](examples/corn_2700_2090_001.png)
 
-See [examples/corn/2700](examples/corn/2700/) for full-year animations. This corn strain grows nearly nowhere. Maybe it's poor input values. Or maybe this strain will struggle in the future. Other strains grow at lower AGDD and could be better suited.
+See full animations here:. 
+
+|   Year                                   |   Year                             |
+|  --------                                |  --------                          |
+| [2090](examples/corn/2700/corn_2090.gif) | [2095](examples/corn/2700/corn_2095.gif) |
+| [2091](examples/corn/2700/corn_2091.gif) | [2096](examples/corn/2700/corn_2096.gif) |
+| [2092](examples/corn/2700/corn_2092.gif) | [2097](examples/corn/2700/corn_2097.gif) |
+| [2093](examples/corn/2700/corn_2093.gif) | [2098](examples/corn/2700/corn_2098.gif) |
+| [2094](examples/corn/2700/corn_2094.gif) |
+
+
+This corn strain grows nearly nowhere. Maybe it's poor input values. Or maybe this strain will struggle in the future. Other strains grow at lower AGDD and could be better suited.
 
 ##### AGDD 800 Strain
 
 ![Corn 2090](examples/corn_800_2090_001.png)
 
-See [examples/corn/800](examples/corn/800/) for more animations. Still processing some years.
+See here for more:
+
+|   Year                                  |   Year              |
+|  --------                               |  --------           |
+| [2090](examples/corn/800/corn_2090.gif) | 2095 - *processing* |
+| [2091](examples/corn/800/corn_2091.gif) | 2096 - *processing* |
+| [2092](examples/corn/800/corn_2092.gif) | 2097 - *processing* |
+| [2093](examples/corn/800/corn_2093.gif) | 2098 - *processing* |
+| [2094](examples/corn/800/corn_2094.gif) |
+
+
+Still processing some years.
 
 ### Upland Rice
 
